@@ -7,6 +7,7 @@ namespace HelloMVC.Models
 {
     public class OrdersService
     {
+        Model1 db = new Model1();
         /// <summary>
         /// 新增訂單
         /// </summary>
@@ -21,8 +22,8 @@ namespace HelloMVC.Models
         /// <returns></returns>
         public Models.Orders GetOrderById(string orderId)
         {
-            Orders result = new Orders();
-            result.OrderID = 1234;
+            int Id = Int32.Parse(orderId);
+            var result = db.Orders.First(x=>x.OrderID == Id);
             return result;
         }
         /// <summary>

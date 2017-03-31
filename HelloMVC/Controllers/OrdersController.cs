@@ -9,7 +9,7 @@ namespace HelloMVC.Controllers
     public class OrdersController : Controller
     {
         /// <summary>
-        /// 訂單管理系統首頁
+        /// 訂單管理系統首頁    
         /// </summary>
         /// <returns></returns>
         public ActionResult Index()
@@ -21,10 +21,15 @@ namespace HelloMVC.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet()]
-        public ActionResult Index(string orderId, string empId)
+        public ActionResult Index(string id)
         {
-            Models.OrdersService ordersService = new Models.OrdersService();
-            ViewBag.order = ordersService.GetOrderById("1");
+            
+if(id != null)
+            {
+                Models.OrdersService ordersService = new Models.OrdersService();
+                ViewBag.order = ordersService.GetOrderById(id);
+            }
+            //ViewBag.order = 
             return View();
         }
         /// <summary>

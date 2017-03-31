@@ -9,25 +9,54 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Index</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#search").click(function () {
+                $.get("index.html",function(data, status){
+                    alert("Data: " + data + "\nStatus: " + status)
+                    $("#result").append(data);
+                })
+            })
+        });
+    </script>
 </head>
 <body>
-    <h2>訂單資料</h2>
+    <h2>查詢訂單</h2>
     <table>
         <tr>
             <td>訂單編號</td>
             <td><input type="text" id="txtOrderId" /></td>
         </tr>
         <tr>
-            <td>負責人員</td>
-            <td><input type="text" id="txtEmpId" /></td>
+            <td>客戶名稱</td>
+            <td><input type="text" id="" /></td>
+        </tr>
+        <tr>
+            <td>負責員工</td>
+            <td><input type="text" id="" /></td>
+        </tr>
+        <tr>
+            <td>出貨公司</td>
+            <td><input type="text" id="" /></td>
+        </tr>
+        <tr>
+            <td>訂購日期</td>
+            <td><input type="date" id="" /></td>
+        </tr>
+        <tr>
+            <td>需要日期</td>
+            <td><input type="date" id="" /></td>
         </tr>
         <tr>
             <td></td>
-            <td><input type="button" value="查詢" /></td>
+            <td><input type="button" value="查詢" id="search"/></td>
         </tr>
     </table>
     <div id="result">
-
+        OrderID : @ViewBag.order.OrderID <br>
+        CustomerID : @ViewBag.order.CustomerID <br>
+        EmployeeID : @ViewBag.order.EmployeeID <br>
     </div>
 </body>
 </html>
