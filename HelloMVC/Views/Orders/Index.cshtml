@@ -13,9 +13,8 @@
     <script>
         $(document).ready(function () {
             $("#search").click(function () {
-                $.get("index.html",function(data, status){
-                    alert("Data: " + data + "\nStatus: " + status)
-                    $("#result").append(data);
+                $.get("search", function (data, status) {
+                    console.log(data);
                 })
             })
         });
@@ -54,9 +53,7 @@
         </tr>
     </table>
     <div id="result">
-        OrderID : @ViewBag.order.OrderID <br>
-        CustomerID : @ViewBag.order.CustomerID <br>
-        EmployeeID : @ViewBag.order.EmployeeID <br>
+       
     </div>
 </body>
 </html>

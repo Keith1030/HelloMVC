@@ -20,17 +20,33 @@ namespace HelloMVC.Controllers
         /// 訂單管理系統首頁
         /// </summary>
         /// <returns></returns>
-        [HttpGet()]
-        public ActionResult Index(string id)
+        //[HttpGet()]
+        public JsonResult Search(string id)
         {
-            
-if(id != null)
-            {
+            Models.Orders order;
+            //if (id != null)
+            //{
                 Models.OrdersService ordersService = new Models.OrdersService();
-                ViewBag.order = ordersService.GetOrderById(id);
-            }
-            //ViewBag.order = 
-            return View();
+                order = ordersService.GetOrderById("10248");
+            //}
+            var result = new
+            {
+                OrderID = order.OrderID,
+                CustomerID = order.CustomerID,
+                EmployeeID = order.EmployeeID,
+                OrderDate = order.OrderDate,
+                RequiredDate = order.RequiredDate,
+                ShippedDate = order.ShippedDate,
+                ShipperID = order.ShipperID,
+                Freight = order.Freight,
+                ShipName = order.ShipName,
+                ShipAddress = order.ShipAddress,
+                ShipCity = order.ShipCity,
+                ShipRegion = order.ShipRegion,
+                ShipPostalCode = order.ShipPostalCode,
+                ShipCountry = order.ShipCountry
+            };
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
         /// <summary>
         /// 新增訂單的畫面

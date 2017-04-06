@@ -23,7 +23,7 @@ namespace HelloMVC.Models
         public Models.Orders GetOrderById(string orderId)
         {
             int Id = Int32.Parse(orderId);
-            var result = db.Orders.First(x=>x.OrderID == Id);
+            var result = db.Orders.Where(x => x.OrderID == Id).FirstOrDefault();
             return result;
         }
         /// <summary>
