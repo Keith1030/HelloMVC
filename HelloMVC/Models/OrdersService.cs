@@ -20,21 +20,17 @@ namespace HelloMVC.Models
         /// 依照Id 取得訂單資料
         /// </summary>
         /// <returns></returns>
-        public Models.Orders GetOrderById(string orderId)
+        public Models.Orders GetOrderById(int orderId)
         {
-            int Id = Int32.Parse(orderId);
-            var result = db.Orders.Where(x => x.OrderID == Id).FirstOrDefault();
-            return result;
+            return db.Orders.Where(x => x.OrderID == orderId).FirstOrDefault();
         }
         /// <summary>
         /// 依照條件取得訂單資料
         /// </summary>
         /// <returns></returns>
-        public List<Models.Orders> GetOrderByCondition()
+        public List<Models.Orders> GetOrderByCondition(int orderId)
         {
-            //todo
-            List<Models.Orders> result = new List<Models.Orders>();
-            return result;
+            return  db.Orders.Where(x => x.OrderID == orderId).ToList();
         }
         /// <summary>
         /// 刪除訂單

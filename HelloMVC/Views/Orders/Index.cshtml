@@ -13,11 +13,49 @@
     <script>
         $(document).ready(function () {
             $("#search").click(function () {
-                $.get("search", function (data, status) {
-                    console.log(data);
-                })
+                var data = {
+                    "sc.OrderID": 10248,
+                    "sc.CustomerID": 85
+                };             
+                $.post("search", data, function(res) {
+                    alert(JSON.stringify(res));
+                }, "json");
+
+                /*var orderId = $("#txtOrderId")[0].value;             
+                $.get("search/"+orderId, function (data, status) {
+                    showResult(data);
+                })*/
             })
         });
+        function showResult(data){
+            $("#result").empty();
+            console.log(data.length);
+            if (data.length == 0)
+            {
+                $("#result").append("查無相關訂單");
+                return;
+            }
+            var result = "";
+            var colName = Object.getOwnPropertyNames(data[0]);
+            result += "<table style='border:1px solid black'><tr>";
+            $.each(colName, function (i, value) {
+                result += "<td>"
+                result += value;
+                result +="</td>"
+            });
+            result += "</tr>";
+            $.each(data, function (i, value1) {
+                result += "<tr>";
+                $.each(value1, function (j, value2) {
+                    result += "<td>"
+                    result += value2;
+                    result += "</td>"
+                });
+                //console.log(value1);
+                result += "</tr>";
+            });
+            $("#result").append(result);
+        }
     </script>
 </head>
 <body>
@@ -25,27 +63,27 @@
     <table>
         <tr>
             <td>訂單編號</td>
-            <td><input type="text" id="txtOrderId" /></td>
+            <td><input type="text" id="OrderID" /></td>
         </tr>
         <tr>
             <td>客戶名稱</td>
-            <td><input type="text" id="" /></td>
+            <td><input type="text" id="CustomerID" /></td>
         </tr>
         <tr>
             <td>負責員工</td>
-            <td><input type="text" id="" /></td>
+            <td><input type="text" id="EmployeeID" /></td>
         </tr>
         <tr>
             <td>出貨公司</td>
-            <td><input type="text" id="" /></td>
+            <td><input type="text" id="ShipCity" /></td>
         </tr>
         <tr>
             <td>訂購日期</td>
-            <td><input type="date" id="" /></td>
+            <td><input type="date" id="OrderDate" /></td>
         </tr>
         <tr>
             <td>需要日期</td>
-            <td><input type="date" id="" /></td>
+            <td><input type="date" id="RequiredDate" /></td>
         </tr>
         <tr>
             <td></td>
