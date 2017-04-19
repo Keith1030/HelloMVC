@@ -14,6 +14,12 @@ namespace HelloMVC.Controllers
         /// <returns></returns>
         public ActionResult Index()
         {
+            Models.CustomersService cs = new Models.CustomersService();
+            ViewBag.customers= cs.GetCustomers();
+            Models.EmployeesService es = new Models.EmployeesService();
+            ViewBag.employees = es.GetEmployees();
+            Models.ShippersService ss = new Models.ShippersService();
+            ViewBag.shippers = ss.GetShippers();
             return View();
         }
         /// <summary>
@@ -21,12 +27,12 @@ namespace HelloMVC.Controllers
         /// </summary>
         public class SearchCondition
         {
-            public int OrderID { get; set; }
-            public int CustomerID { get; set; }
-            //public int EmployeeID { get; set; }
-            //public string ShipCity { get; set; }
-            //public DateTime OrderDate { get; set; }
-            //public DateTime RequiredDate { get; set; }
+            public int? OrderID { get; set; }
+            public int? CustomerID { get; set; }
+            public int? EmployeeID { get; set; }
+            public int? ShipperID { get; set; }
+            public DateTime? OrderDate { get; set; }
+            public DateTime? RequiredDate { get; set; }
         }
         /// <summary>
         /// 訂單管理系統首頁
@@ -34,10 +40,8 @@ namespace HelloMVC.Controllers
         /// <returns></returns>
         public JsonResult Search(SearchCondition sc)
         {
-            Models.OrdersService ordersService = new Models.OrdersService();
-            if(sc.OrderID == 0)
-                return Json(null, JsonRequestBehavior.AllowGet);
-            List<Models.Orders> orders = ordersService.GetOrderByCondition(sc.OrderID);
+            Models.OrdersService ordersService = new Models.OrdersService();          
+            List<Models.Orders> orders = ordersService.GetOrderByCondition(sc);
             List<Object> results = new List<Object>();
             for (int i = 0; i < orders.Count; i++) {
                 Models.Orders order = orders[i];
@@ -48,7 +52,7 @@ namespace HelloMVC.Controllers
                     EmployeeID = order.EmployeeID,
                     OrderDate = order.OrderDate.ToLongDateString(),
                     RequiredDate = order.RequiredDate.ToLongDateString(),
-                    ShippedDate = order.ShippedDate,
+                    ShippedDate = (order.ShippedDate.HasValue)?order.ShippedDate.GetValueOrDefault().ToLongDateString():null,             
                     ShipperID = order.ShipperID,
                     Freight = order.Freight,
                     ShipName = order.ShipName,

@@ -150,7 +150,9 @@
     </Compile>
     <Compile Include="Models\Categories.cs" />
     <Compile Include="Models\Customers.cs" />
+    <Compile Include="Models\CustomersService.cs" />
     <Compile Include="Models\Employees.cs" />
+    <Compile Include="Models\EmployeesService.cs" />
     <Compile Include="Models\Model1.cs" />
     <Compile Include="Models\Nums.cs" />
     <Compile Include="Models\OrderDetails.cs" />
@@ -159,6 +161,7 @@
     <Compile Include="Models\Products.cs" />
     <Compile Include="Models\Scores.cs" />
     <Compile Include="Models\Shippers.cs" />
+    <Compile Include="Models\ShippersService.cs" />
     <Compile Include="Models\Suppliers.cs" />
     <Compile Include="Models\Tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

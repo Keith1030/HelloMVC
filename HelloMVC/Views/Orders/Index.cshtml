@@ -9,22 +9,29 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Index</title>
+    <style>
+        table,th,td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+    </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
     <script>
         $(document).ready(function () {
             $("#search").click(function () {
                 var data = {
-                    "sc.OrderID": 10248,
-                    "sc.CustomerID": 85
-                };             
+                    "sc.OrderID": parseInt($("#OrderID").val()),
+                    "sc.CustomerID": parseInt($('#CustomerID').val()),
+                    "sc.EmployeeID": parseInt($("#EmployeeID").val()),
+                    "sc.ShipperID": parseInt($("#ShipperID").val()),
+                    "sc.OrderDate": $("#OrderDate").val(),
+                    "sc.RequiredDate": $("#RequiredDate").val()
+                };
+                console.log(data);
                 $.post("search", data, function(res) {
-                    alert(JSON.stringify(res));
+                    console.log(res);
+                    showResult(res);
                 }, "json");
-
-                /*var orderId = $("#txtOrderId")[0].value;             
-                $.get("search/"+orderId, function (data, status) {
-                    showResult(data);
-                })*/
             })
         });
         function showResult(data){
@@ -37,21 +44,18 @@
             }
             var result = "";
             var colName = Object.getOwnPropertyNames(data[0]);
-            result += "<table style='border:1px solid black'><tr>";
+            result += "<table><tr>";
             $.each(colName, function (i, value) {
-                result += "<td>"
-                result += value;
-                result +="</td>"
+                result += "<th>" + value + "</th>";
             });
+            result += "<th>操作</th>";
             result += "</tr>";
             $.each(data, function (i, value1) {
                 result += "<tr>";
                 $.each(value1, function (j, value2) {
-                    result += "<td>"
-                    result += value2;
-                    result += "</td>"
+                    result += "<td>" + value2 + "</td>";
                 });
-                //console.log(value1);
+                result += "<td><button>修改</button><button>刪除</button></td>";
                 result += "</tr>";
             });
             $("#result").append(result);
@@ -67,15 +71,39 @@
         </tr>
         <tr>
             <td>客戶名稱</td>
-            <td><input type="text" id="CustomerID" /></td>
+            <td>
+                <select id="CustomerID">
+                    <option>未選取</option>
+                    @foreach (var customer in ViewBag.customers)
+                    {
+                        <option value="@customer.CustomerID">@customer.CompanyName</option>  
+                    }
+                </select>
+            </td>
         </tr>
         <tr>
             <td>負責員工</td>
-            <td><input type="text" id="EmployeeID" /></td>
+            <td>
+                <select id="EmployeeID">
+                    <option>未選取</option>
+                    @foreach (var employee in ViewBag.employees)
+                    {
+                        <option value="@employee.EmployeeID">@employee.FirstName @employee.LastName</option>
+                    }
+                </select>
+            </td>
         </tr>
         <tr>
             <td>出貨公司</td>
-            <td><input type="text" id="ShipCity" /></td>
+            <td>
+                <select id="ShipperID">
+                    <option>未選取</option>
+                    @foreach (var shipper in ViewBag.shippers)
+                    {
+                        <option value="@shipper.ShipperID">@shipper.CompanyName</option>
+                    }
+                </select>
+            </td>
         </tr>
         <tr>
             <td>訂購日期</td>

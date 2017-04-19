@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using static HelloMVC.Controllers.OrdersController;
 
 namespace HelloMVC.Models
 {
@@ -28,9 +29,17 @@ namespace HelloMVC.Models
         /// 依照條件取得訂單資料
         /// </summary>
         /// <returns></returns>
-        public List<Models.Orders> GetOrderByCondition(int orderId)
+        public List<Models.Orders> GetOrderByCondition(SearchCondition sc)
         {
-            return  db.Orders.Where(x => x.OrderID == orderId).ToList();
+            
+            return  db.Orders
+                    .Where(x => sc.OrderID == null || x.OrderID == sc.OrderID)
+                    .Where(x => sc.CustomerID == null || x.CustomerID == sc.CustomerID)
+                    .Where(x => sc.EmployeeID == null || x.EmployeeID == sc.EmployeeID)
+                    .Where(x => sc.ShipperID == null || x.ShipperID == sc.ShipperID)
+                    .Where(x => sc.OrderDate == null || x.OrderDate == sc.OrderDate)
+                    .Where(x => sc.RequiredDate == null || x.RequiredDate == sc.RequiredDate)
+                    .ToList();
         }
         /// <summary>
         /// 刪除訂單
