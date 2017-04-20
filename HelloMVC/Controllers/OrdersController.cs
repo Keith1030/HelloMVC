@@ -85,5 +85,19 @@ namespace HelloMVC.Controllers
             orderService.InsertOrder(order);
             return View("index");
         }
+        /// <summary>
+        /// 修改訂單的Action
+        /// </summary>
+        /// <param name="order"></param>
+        /// <returns></returns>
+        public ActionResult UpdateOrder(Models.Orders updateOrder)
+        {
+            Models.OrdersService orderService = new Models.OrdersService();
+            int rows = orderService.UpdateOrder(updateOrder);
+            var results = new { result = (rows > 0)?"成功":"失敗",
+                                orderID = updateOrder.OrderID,
+                                rows = rows};
+            return Json(results, JsonRequestBehavior.AllowGet);
+        }
     }
 }

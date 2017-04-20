@@ -14,35 +14,71 @@
             border: 1px solid black;
             border-collapse: collapse;
         }
+        .dlg-no-close .ui-dialog-titlebar-close {display: none;}
     </style>
+    <link href="http://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
         $(document).ready(function () {
-            $("#search").click(function () {
-                var data = {
-                    "sc.OrderID": parseInt($("#OrderID").val()),
-                    "sc.CustomerID": parseInt($('#CustomerID').val()),
-                    "sc.EmployeeID": parseInt($("#EmployeeID").val()),
-                    "sc.ShipperID": parseInt($("#ShipperID").val()),
-                    "sc.OrderDate": $("#OrderDate").val(),
-                    "sc.RequiredDate": $("#RequiredDate").val()
-                };
-                console.log(data);
-                $.post("search", data, function(res) {
-                    console.log(res);
-                    showResult(res);
-                }, "json");
-            })
+            $("#updateDialog").dialog({
+                autoOpen: false,
+                modal: true,
+                dialogClass: "dlg-no-close",
+                title: "修改訂單",
+                position: { at: "top" },
+                width:'auto',
+                buttons: {
+                    "Ok": updateOrder,
+                    "Cancel": function() {
+                        $(this).dialog("close");
+                    }
+                },
+            });
+            $("#deleteDialog").dialog({
+                autoOpen: false,
+                modal: true,
+                dialogClass: "dlg-no-close",
+                title: "刪除訂單",
+                position: { at: "top" },
+                width: 'auto',
+                buttons: {
+                    "Ok": deleteOrder,
+                    "Cancel": function () {
+                        $(this).dialog("close");
+                    }
+                },
+            });
+
+            $("#search").click(sendSerch);
         });
+        function sendSerch() {
+            var data = {
+                "sc.OrderID": parseInt($("#OrderID").val()),
+                "sc.CustomerID": parseInt($('#CustomerID').val()),
+                "sc.EmployeeID": parseInt($("#EmployeeID").val()),
+                "sc.ShipperID": parseInt($("#ShipperID").val()),
+                "sc.OrderDate": $("#OrderDate").val(),
+                "sc.RequiredDate": $("#RequiredDate").val()
+            };
+            console.log("送出的查詢條件");
+            console.log(data);
+            $.post("search", data, function(res) {
+                showResult(res);
+            }, "json");
+        }
         function showResult(data){
             $("#result").empty();
-            console.log(data.length);
+            var result = "";
             if (data.length == 0)
             {
                 $("#result").append("查無相關訂單");
                 return;
             }
-            var result = "";
+            else {
+                result += "查詢完畢 共" + data.length + "筆";
+            }
+
             var colName = Object.getOwnPropertyNames(data[0]);
             result += "<table><tr>";
             $.each(colName, function (i, value) {
@@ -55,14 +91,62 @@
                 $.each(value1, function (j, value2) {
                     result += "<td>" + value2 + "</td>";
                 });
-                result += "<td><button>修改</button><button>刪除</button></td>";
+                result += "<td><button onclick='openUpdateDialog(" + value1.OrderID + ")'>修改</button><button>刪除</button></td>";
                 result += "</tr>";
             });
             $("#result").append(result);
         }
+        function openUpdateDialog(updateID) {
+            console.log("要修改的orderID");
+            console.log(updateID);
+            $("#updateDialog").parent().css({ position: "fixed" }).end().dialog("open");
+            var data = {
+                "sc.OrderID": updateID,
+            };
+            $.post("search", data, function (res) {
+                $("#updateDialog").empty();
+                var result = "";
+                result += "<table>";
+                $.each(res[0], function (key, value) {
+                    result += "<tr><td>" + key + "</td><td><input id='updateOrder-" + key + "'value='" + value + "'></td><tr>";
+                });
+                result += "</table>";
+                $("#updateDialog").append(result);
+            }, "json");
+        }
+        function updateOrder() {
+            var updateOrder = $('input[id^=updateOrder-]');
+            var data = {};
+            $.each(updateOrder, function (key, value) {              
+                id = value.id.replace("-", ".");
+                data[id] = value.value;
+            });
+            console.log("送出的修改訂單");
+            console.log(data);
+            $.post("UpdateOrder", data, function (res) {
+                alert("修改訂單 編號" + res.orderID + " " + res.result + "\n影響了" + res.rows + "行");
+                sendSerch();
+            }, "json");
+            $(this).dialog("close");
+        }
+        function openDeleteDialog(deleteID) {
+            console.log("要刪除的orderID");
+            console.log(deleteID);
+            $("#deleteDialog").parent().css({ position: "fixed" }).end().data('deleteID', deleteID).dialog("open");
+            $("#deleteDialog").append("確定要刪除?");
+        }
+        function deleteOrder() {
+            var data = $("#deleteDialog").data('deleteID');
+            $.post("DeleteOrder", data, function (res) {
+                console.log(res);
+            }, "json");
+            $(this).dialog("close");
+        }
     </script>
 </head>
 <body>
+    <div id="updateDialog"></div>
+    <div id="deleteDialog"></div>
     <h2>查詢訂單</h2>
     <table>
         <tr>

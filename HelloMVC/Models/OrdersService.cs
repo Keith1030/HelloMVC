@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Web;
 using static HelloMVC.Controllers.OrdersController;
 
@@ -51,9 +52,24 @@ namespace HelloMVC.Models
         /// <summary>
         /// 更新訂單
         /// </summary>
-        public void UpdateOrder(Models.Orders order)
+        public int UpdateOrder(Models.Orders updateOrder)
         {
-            //todo
+            var original = db.Orders.Where(x => x.OrderID == updateOrder.OrderID).FirstOrDefault();
+            PropertyInfo[] properties = typeof(Models.Orders).GetProperties();
+            foreach (var property in properties)
+            {
+                if (property.GetValue(updateOrder) == null)
+                    continue;
+                property.SetValue(original, property.GetValue(updateOrder));
+            }
+            try
+            {
+                return db.SaveChanges();
+            }
+            catch(Exception e)
+            {
+                return 0;
+            }
         }
     }
 }
