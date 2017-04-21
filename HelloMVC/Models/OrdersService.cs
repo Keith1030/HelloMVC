@@ -45,16 +45,25 @@ namespace HelloMVC.Models
         /// <summary>
         /// 刪除訂單
         /// </summary>
-        public void DeleteOrderById(string orderId)
+        public int DeleteOrderById(int orderId)
         {
-            //todo
+            db.Orders.RemoveRange(db.Orders.Where(x => x.OrderID == orderId));
+            db.OrderDetails.RemoveRange(db.OrderDetails.Where(x => x.OrderID == orderId));
+            try
+            {
+                return db.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                return 0;
+            }
         }
         /// <summary>
         /// 更新訂單
         /// </summary>
         public int UpdateOrder(Models.Orders updateOrder)
         {
-            var original = db.Orders.Where(x => x.OrderID == updateOrder.OrderID).FirstOrDefault();
+            Models.Orders original = db.Orders.Where(x => x.OrderID == updateOrder.OrderID).FirstOrDefault();
             PropertyInfo[] properties = typeof(Models.Orders).GetProperties();
             foreach (var property in properties)
             {

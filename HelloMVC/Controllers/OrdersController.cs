@@ -99,5 +99,17 @@ namespace HelloMVC.Controllers
                                 rows = rows};
             return Json(results, JsonRequestBehavior.AllowGet);
         }
+        public ActionResult DeleteOrder(int orderID)
+        {
+            Models.OrdersService orderService = new Models.OrdersService();
+            int rows = orderService.DeleteOrderById(orderID);
+            var results = new
+            {
+                result = (rows > 0) ? "成功" : "失敗",
+                orderID = orderID,
+                rows = rows
+            };
+            return Json(results, JsonRequestBehavior.AllowGet);
+        }
     }
 }

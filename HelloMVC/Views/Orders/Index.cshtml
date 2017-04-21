@@ -91,7 +91,7 @@
                 $.each(value1, function (j, value2) {
                     result += "<td>" + value2 + "</td>";
                 });
-                result += "<td><button onclick='openUpdateDialog(" + value1.OrderID + ")'>修改</button><button>刪除</button></td>";
+                result += "<td><button onclick='openUpdateDialog(" + value1.OrderID + ")'>修改</button><button onclick='openDeleteDialog(" +value1.OrderID + ")'>刪除</button></td>";
                 result += "</tr>";
             });
             $("#result").append(result);
@@ -136,9 +136,11 @@
             $("#deleteDialog").append("確定要刪除?");
         }
         function deleteOrder() {
-            var data = $("#deleteDialog").data('deleteID');
+            var data = {orderID : $("#deleteDialog").data('deleteID')};
+            console.log(data);
             $.post("DeleteOrder", data, function (res) {
-                console.log(res);
+                alert("刪除訂單 編號" + res.orderID + " " + res.result + "\n影響了" + res.rows + "行");
+                sendSerch();
             }, "json");
             $(this).dialog("close");
         }
@@ -162,6 +164,7 @@
                     {
                         <option value="@customer.CustomerID">@customer.CompanyName</option>  
                     }
+                    
                 </select>
             </td>
         </tr>
