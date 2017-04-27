@@ -149,15 +149,15 @@
 <body>
     <div id="updateDialog"></div>
     <div id="deleteDialog"></div>
-    <h2>查詢訂單</h2>
+    訂單查詢
     <table>
         <tr>
             <td>訂單編號</td>
-            <td><input type="text" id="OrderID" /></td>
+            <td colspan="3"><input type="text" id="OrderID" /></td>
         </tr>
         <tr>
             <td>客戶名稱</td>
-            <td>
+            <td colspan="3">
                 <select id="CustomerID">
                     <option>未選取</option>
                     @foreach (var customer in ViewBag.customers)
@@ -170,7 +170,7 @@
         </tr>
         <tr>
             <td>負責員工</td>
-            <td>
+            <td colspan="3">
                 <select id="EmployeeID">
                     <option>未選取</option>
                     @foreach (var employee in ViewBag.employees)
@@ -182,7 +182,7 @@
         </tr>
         <tr>
             <td>出貨公司</td>
-            <td>
+            <td colspan="3">
                 <select id="ShipperID">
                     <option>未選取</option>
                     @foreach (var shipper in ViewBag.shippers)
@@ -195,14 +195,20 @@
         <tr>
             <td>訂購日期</td>
             <td><input type="date" id="OrderDate" /></td>
+            <td>出貨日期</td>
+            <td><input type="date" id="ShippedDate" /></td>
         </tr>
         <tr>
             <td>需要日期</td>
-            <td><input type="date" id="RequiredDate" /></td>
+            <td colspan="3"><input type="date" id="RequiredDate" /></td>            
         </tr>
         <tr>
             <td></td>
-            <td><input type="button" value="查詢" id="search"/></td>
+            <td colspan="3">
+                <input type="button" value="查詢" id="search" />
+                <input type="button" value="清除" id="" />
+                <input type="button" value="新增訂單" id=""/>
+            </td>
         </tr>
     </table>
     <div id="result">
