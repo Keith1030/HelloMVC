@@ -71,6 +71,12 @@ namespace HelloMVC.Controllers
         /// <returns></returns>
         public ActionResult InsertOrder()
         {
+            Models.CustomersService cs = new Models.CustomersService();
+            ViewBag.customers = cs.GetCustomers();
+            Models.EmployeesService es = new Models.EmployeesService();
+            ViewBag.employees = es.GetEmployees();
+            Models.ShippersService ss = new Models.ShippersService();
+            ViewBag.shippers = ss.GetShippers();
             return View();
         }
         /// <summary>

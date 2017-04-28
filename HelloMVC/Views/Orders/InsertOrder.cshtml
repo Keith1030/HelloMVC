@@ -1,131 +1,153 @@
-﻿@model HelloMVC.Models.Orders
-
+﻿
 @{
-    ViewBag.Title = "InsertOrder";
+    Layout = null;
 }
 
-<h2>InsertOrder</h2>
+<!DOCTYPE html>
 
-@using (Html.BeginForm()) 
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>Orders</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.CustomerID, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.CustomerID, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.CustomerID, "", new { @class = "text-danger" })
-            </div>
-        </div>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.EmployeeID, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.EmployeeID, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.EmployeeID, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.OrderDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.OrderDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.OrderDate, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.RequiredDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.RequiredDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.RequiredDate, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ShippedDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ShippedDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ShippedDate, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ShipperID, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ShipperID, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ShipperID, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Freight, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Freight, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Freight, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ShipName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ShipName, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ShipName, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ShipAddress, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ShipAddress, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ShipAddress, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ShipCity, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ShipCity, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ShipCity, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ShipRegion, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ShipRegion, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ShipRegion, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ShipPostalCode, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ShipPostalCode, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ShipPostalCode, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ShipCountry, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ShipCountry, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ShipCountry, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </div>
-    </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+        .dlg-no-close .ui-dialog-titlebar-close {
+            display: none;
+        }
+    </style>
+    <link href="http://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        $(document).ready(function () {
+            insertRow();
+            insertRow();
+        });
+        function insertRow() {
+            $('#OrderDetail tr:last')
+                .after('<tr>'+
+                        '<td><select></select></td>' +
+                        '<td><input /></td>' +
+                        '<td><input /></td>' +
+                        '<td><input /></td>' +
+                        '<td><input value="取消" type="button" onclick="deleteRow(this)"></td>' +
+                        '</tr>');
+        }
+        function deleteRow(sender) {
+            sender.parentElement.parentElement.remove();
+        }
+    </script>
+</head>
+<body>
+    新增訂單
+    <table>
+        <tr>
+            <td>客戶名稱</td>
+            <td colspan="3">
+                <select id="CustomerID">
+                    <option>未選取</option>
+                    @foreach (var customer in ViewBag.customers)
+                    {
+                        <option value="@customer.CustomerID">@customer.CompanyName</option>
+                    }
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>負責員工名稱</td>
+            <td colspan="3">
+                <select id="CustomerID">
+                    <option>未選取</option>
+                    @foreach (var employee in ViewBag.employees)
+                    {
+                        <option value="@employee.EmployeeID">@employee.FirstName @employee.LastName</option>
+                    }
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>訂單日期</td>
+            <td>
+                <input type="date" />
+            </td>
+            <td>需要日期</td>
+            <td>
+                <input type="date" />
+            </td>
+        </tr>
+        <tr>
+            <td>出貨日期</td>
+            <td colspan="3"><input type="date" id="ShippedDate" /></td>
+        </tr>
+        <tr>
+            <td>出貨公司名稱</td>
+            <td colspan="3">
+                <select id="CustomerID">
+                @foreach (var shipper in ViewBag.shippers)
+                {
+                    <option value="@shipper.ShipperID">@shipper.CompanyName</option>
+                }
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>運費</td>
+            <td colspan="3"><input /></td>
+        </tr>
+        <tr>
+            <td>出貨國家</td>
+            <td>
+                <input />
+            </td>
+            <td>出貨城市</td>
+            <td>
+                <input />
+            </td>
+        </tr>
+        <tr>
+            <td>出貨地區</td>
+            <td>
+                <input />
+            </td>
+            <td>郵遞區號</td>
+            <td>
+                <input />
+            </td>
+        </tr>
+        <tr>
+            <td>出貨地址</td>
+            <td>
+                <input />
+            </td>
+            <td>出貨說明</td>
+            <td>
+                <input />
+            </td>
+        </tr>
+        <tr>
+            <td>訂單金額總計</td>
+            <td colspan="3">
+                <input />
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td colspan="3">
+                <input type="button" value="存檔" id="" />
+                <input type="button" value="回前一頁" onclick="javascript:location.href='Index'" />
+            </td>
+        </tr>       
+    </table>
+    訂單明細<br>
+    <p onclick="insertRow()">+新增訂單</p>
+    <table id="OrderDetail">
+        <tr>
+            <td>商品</td><td>單價</td><td>數量</td><td>小計</td><td></td>
+        </tr>
+    </table>
+</body>
+</html>

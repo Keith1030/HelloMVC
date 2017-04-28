@@ -20,6 +20,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
     <script src="http://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
+
         $(document).ready(function () {
             $("#updateDialog").dialog({
                 autoOpen: false,
@@ -117,7 +118,7 @@
         function updateOrder() {
             var updateOrder = $('input[id^=updateOrder-]');
             var data = {};
-            $.each(updateOrder, function (key, value) {              
+            $.each(updateOrder, function (key, value) {
                 id = value.id.replace("-", ".");
                 data[id] = value.value;
             });
@@ -143,6 +144,14 @@
                 sendSerch();
             }, "json");
             $(this).dialog("close");
+        }
+        function clearAll() {
+            $('#OrderID').val('');
+            $('#CustomerID').val('未選取')
+            $("#EmployeeID").val('未選取')
+            $("#ShipperID").val('未選取')
+            $("#OrderDate").val('')
+            $("#RequiredDate").val('')
         }
     </script>
 </head>
@@ -206,13 +215,14 @@
             <td></td>
             <td colspan="3">
                 <input type="button" value="查詢" id="search" />
-                <input type="button" value="清除" id="" />
-                <input type="button" value="新增訂單" id=""/>
+                <input type="button" value="清除" onclick="clearAll()" />
+                <input type="button" value="新增訂單" onclick="javascript:location.href='InsertOrder'"/>
             </td>
         </tr>
     </table>
     <div id="result">
        
     </div>
+    
 </body>
 </html>
